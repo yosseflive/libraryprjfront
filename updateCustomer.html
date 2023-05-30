@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Update Customer</h1>
+    <!-- Add a new customer -->
+    <div id="customer">
+        
+    </div>
+
+    <h2>Update customer</h2>
+    <p>ID:<input type="text" id="id" placeholder="ENTER ID" required></p>
+    <p>Name:<input type="text" id="customer_name" value=${customer.name} required></p>
+    <p>City:<input type="text" id="customer_city" placeholder="ENTER YOUR CITY" required></p>
+    <p>Age:<input type="number" id="customer_age" placeholder="ENTER YOUR AGE" required></p>
+    <p>Mail:<input type="email" id="customer_mail" placeholder="ENTER YOUR MAIL" required></p>
+    <button onclick="updateCustomer()">Update customer</button>
+    <!-- <input type="submit" value="Add Customer"> -->
+    <!-- ... previous HTML code ... -->
+
+<script>
+    const MY_SERVER = 'https://libraryproj.onrender.com';
+
+    const updateCustomer = async () => {
+        const id = document.getElementById('id').value;
+        const customer_name = document.getElementById('customer_name').value;
+        const customer_city = document.getElementById('customer_city').value;
+        const customer_age = document.getElementById('customer_age').value;
+        const customer_mail = document.getElementById('customer_mail').value;
+
+        const data = {
+            id: id,
+            name: customer_name,
+            city: customer_city,
+            age: customer_age,
+            mail: customer_mail
+        };
+
+        console.log(data);
+
+        try {
+            // Fetch customer data from the server
+            const response = await axios.get(`${MY_SERVER}/getCustomer?id=${id}`);
+            const customer = response.data;
+
+            // Populate the input fields with customer data
+            document.getElementById('id').value = customer.id;
+            document.getElementById('customer_name').value = customer.name;
+            document.getElementById('customer_city').value = customer.city;
+            document.getElementById('customer_age').value = customer.age;
+            document.getElementById('customer_mail').value = customer.mail;
+
+            // Update the customer on the server
+            const updateResponse = await axios.post(`${MY_SERVER}/updateCustomer`, data);
+            console.log(updateResponse.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+</script>
+
+<!-- ... remaining HTML code ... -->
+
+</body>
+
+</html>
