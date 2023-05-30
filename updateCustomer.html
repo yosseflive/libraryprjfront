@@ -36,34 +36,51 @@
         
     </div>
 
-    <h2>Update customer</h2>
-    <p>ID:<input type="text" id="id" placeholder="ENTER ID" required></p>
-    <p>Name:<input type="text" id="customer_name" value=${customer.name} required></p>
-    <p>City:<input type="text" id="customer_city" placeholder="ENTER YOUR CITY" required></p>
-    <p>Age:<input type="number" id="customer_age" placeholder="ENTER YOUR AGE" required></p>
-    <p>Mail:<input type="email" id="customer_mail" placeholder="ENTER YOUR MAIL" required></p>
-    <button onclick="updateCustomer()">Update customer</button>
-    <!-- <input type="submit" value="Add Customer"> -->
-    <script>
+<!-- ... previous HTML code ... -->
 
+<script>
+    const MY_SERVER = 'https://libraryproj.onrender.com';
 
-        const MY_SERVER = 'https://libraryproj.onrender.com'
-        const updateCustomer = async () => {
-            data = {
-                id : id.value,
-                name: customer_name.value,
-                city: customer_city.value,
-                age: customer_age.value,
-                mail: customer_mail.value,
+    const updateCustomer = async () => {
+        const id = document.getElementById('id').value;
+        const customer_name = document.getElementById('customer_name').value;
+        const customer_city = document.getElementById('customer_city').value;
+        const customer_age = document.getElementById('customer_age').value;
+        const customer_mail = document.getElementById('customer_mail').value;
 
-            }
-            console.log(data);
-            // WE ARE SENDING THE DATA WITH THIS LINE!!!!
-            customers = await axios.post(MY_SERVER + "/updateCustomer", data)
+        const data = {
+            id: id,
+            name: customer_name,
+            city: customer_city,
+            age: customer_age,
+            mail: customer_mail
+        };
 
+        console.log(data);
+
+        try {
+            // Fetch customer data from the server
+            const response = await axios.get(`${MY_SERVER}/getCustomer?id=${id}`);
+            const customer = response.data;
+
+            // Populate the input fields with customer data
+            document.getElementById('id').value = customer.id;
+            document.getElementById('customer_name').value = customer.name;
+            document.getElementById('customer_city').value = customer.city;
+            document.getElementById('customer_age').value = customer.age;
+            document.getElementById('customer_mail').value = customer.mail;
+
+            // Update the customer on the server
+            const updateResponse = await axios.post(`${MY_SERVER}/updateCustomer`, data);
+            console.log(updateResponse.data);
+        } catch (error) {
+            console.error(error);
         }
+    };
+</script>
 
-    </script>
+<!-- ... remaining HTML code ... -->
+
 </body>
 
 </html>
