@@ -36,7 +36,15 @@
         
     </div>
 
-<!-- ... previous HTML code ... -->
+    <h2>Update customer</h2>
+    <p>ID:<input type="text" id="id" placeholder="ENTER ID" required></p>
+    <p>Name:<input type="text" id="customer_name" value=${customer.name} required></p>
+    <p>City:<input type="text" id="customer_city" placeholder="ENTER YOUR CITY" required></p>
+    <p>Age:<input type="number" id="customer_age" placeholder="ENTER YOUR AGE" required></p>
+    <p>Mail:<input type="email" id="customer_mail" placeholder="ENTER YOUR MAIL" required></p>
+    <button onclick="updateCustomer()">Update customer</button>
+    <!-- <input type="submit" value="Add Customer"> -->
+    <!-- ... previous HTML code ... -->
 
 <script>
     const MY_SERVER = 'https://libraryproj.onrender.com';
